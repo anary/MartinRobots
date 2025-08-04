@@ -1,6 +1,7 @@
 ﻿using Domain.Abstractions;
 using Domain.Commons;
 using Domain.Events;
+using Domain.Services;
 
 namespace Domain.Robot;
 public class Robot : AggregateRoot
@@ -9,14 +10,6 @@ public class Robot : AggregateRoot
     public int Y { get; private set; }
     public Orientation Orientation { get; private set; }
     public bool IsLost { get; private set; }
-
-    public int MaxX { get; set; }
-    public int MaxY { get; set; }
-    private readonly HashSet<(int, int)> _scents = new HashSet<(int, int)>();
-
-    private bool IsScented(int x, int y) => _scents.Contains((x, y));
-    private void AddScent(int x, int y) => _scents.Add((x, y));
-    private bool IsOutofBounds(int x, int y) => x < 0 || x > MaxX || y < 0 || y > MaxY;
 
     public static Robot Land(Guid id, string x, string y, Orientation orientation)
     {
@@ -37,20 +30,20 @@ public class Robot : AggregateRoot
         ApplyChange(new RobotTurnedRightEvent(Id, (Orientation)(((int)Orientation + 1) % 4)));
     }
 
-    public void MoveForward()
+    public void MoveForward(MarsGridService grid)
     {
         if (IsLost) return;
         var (dX, dY) = Orientation.ToVector();
         int nextX = X + dX;
         int nextY = Y + dY;
-        if (IsOutofBounds(nextX, nextY))
+        if (grid.IsOutofBounds(nextX, nextY))
         {
-            if (IsScented(X, Y))
+            if (grid.IsScented(X, Y))
             {
                 return;
             }
             ApplyChange(new RobotLostEvent(Id));
-            AddScent(X, Y);
+            grid.AddScent(X, Y);
         }
         else
         {
