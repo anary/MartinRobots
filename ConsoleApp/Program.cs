@@ -10,6 +10,8 @@ public class Program
     {
         try
         {
+            Console.WriteLine("Welcome to the Mars Rover Simulator!");
+            Console.WriteLine("Please enter the grid dimensions in the format 'X Y' (e.g., '5 5'):");
             // Read grid setup
             var gridCoords = Console.ReadLine()?.Split(' ');
             int gridX = int.Parse(gridCoords[0]);
@@ -34,6 +36,8 @@ public class Program
 
     private static async Task StartRobot(IMediator mediator)
     {
+        const string instructionsPrompt = "Please enter the robot's starting position in the format 'X Y Orientation' (e.g., '1 2 N') followed by the instructions (e.g., 'LFRFF'):";
+        Console.WriteLine(instructionsPrompt);
         string robotPositionInput;
         while (!string.IsNullOrEmpty(robotPositionInput = Console.ReadLine()))
         {
