@@ -11,7 +11,7 @@ public class Robot : AggregateRoot
     public Orientation Orientation { get; private set; }
     public bool IsLost { get; private set; }
 
-    public static Robot Land(Guid id, string x, string y, Orientation orientation)
+    public static Robot Land(Guid id, int x, int y, Orientation orientation)
     {
         var robot = new Robot();
         robot.ApplyChange(new RobotLandedEvent(id, x, y, orientation));
