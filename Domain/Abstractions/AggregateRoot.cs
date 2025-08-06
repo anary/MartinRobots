@@ -3,7 +3,9 @@ public abstract class AggregateRoot
 {
     public Guid Id { get; protected set; }
     public int Version { get; protected set; } = -1;
-    private readonly List<DomainEvent> _uncommittedEvents = new List<DomainEvent>();
+    private readonly List<DomainEvent> _uncommittedEvents = [];
+    public IReadOnlyCollection<DomainEvent> GetUncommittedEvents() => _uncommittedEvents.AsReadOnly();
+    public void ClearUncommittedEvents() => _uncommittedEvents.Clear();
 
     protected void ApplyChange(DomainEvent @event)
     {

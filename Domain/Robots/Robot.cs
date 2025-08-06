@@ -3,7 +3,7 @@ using Domain.Commons;
 using Domain.Events;
 using Domain.Services;
 
-namespace Domain.Robot;
+namespace Domain.Robots;
 public class Robot : AggregateRoot
 {
     public int X { get; private set; }
@@ -57,8 +57,8 @@ public class Robot : AggregateRoot
     private void When(RobotLandedEvent e)
     {
         Id = e.AggregateId;
-        X = int.Parse(e.X);
-        Y = int.Parse(e.Y);
+        X = e.X;
+        Y = e.Y;
         Orientation = e.Orientation;
     }
 
