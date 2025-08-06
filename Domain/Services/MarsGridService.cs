@@ -8,8 +8,8 @@
 /// <param name="maxY">Nax y</param>
 public class MarsGridService(int maxX, int maxY)
 {
-    private readonly int _maxX = maxX;
-    private readonly int _maxY = maxY;
+    private readonly int _maxX = maxX > 50 ? 50 : maxX;
+    private readonly int _maxY = maxY > 50 ? 50 : maxY;
     private readonly HashSet<(int, int)> _scents = [];
 
     public bool IsScented(int x, int y) => _scents.Contains((x, y));
