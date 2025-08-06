@@ -22,6 +22,7 @@ public sealed class ProcessBobotInstructionsCommandHandler : IRequestHandler<Pro
         var robot = Robot.Land(Guid.NewGuid(), request.StartX, request.StartY, request.StartOrientation);
 
         // execute the instructions by calling the methods on the robot aggregate
+        // It can be abstracted to a service
         foreach (var instruction in request.Instructions)
         {
             switch (instruction)
