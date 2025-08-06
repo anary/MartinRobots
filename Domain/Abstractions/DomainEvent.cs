@@ -1,6 +1,8 @@
-﻿namespace Domain.Abstractions;
+﻿using MediatR;
 
-public abstract class DomainEvent
+namespace Domain.Abstractions;
+
+public abstract class DomainEvent : INotification
 {
     public Guid AggregateId { get; protected set; }
     public DateTime DateTime { get; protected set; } = DateTime.UtcNow;

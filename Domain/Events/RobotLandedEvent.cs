@@ -15,5 +15,3 @@ internal class RobotLandedEvent : DomainEvent
         Orientation = orientation;
     }
 }
-{
-}

@@ -51,8 +51,7 @@ public class Robot : AggregateRoot
         }
     }
 
-    protected override void When(DomainEvent @event)
-        => When((dynamic)@event);
+    protected override void When(DomainEvent @event) => When((dynamic)@event);
 
     private void When(RobotLandedEvent e)
     {
@@ -62,17 +61,14 @@ public class Robot : AggregateRoot
         Orientation = e.Orientation;
     }
 
-    private void When(RobotTurnedLeftEvent e)
-        => Orientation = e.NewOrientation;
-
-    private void When(RobotTurnedRightEvent e)
-        => Orientation = e.NewOrientation;
-
-    private void When(RobotLostEvent e)
+    private void When(RobotTurnedLeftEvent e) => Orientation = e.NewOrientation;
+    private void When(RobotTurnedRightEvent e) => Orientation = e.NewOrientation;
+    private void When(RobotMovedForwardEvent e)
     {
-        IsLost = true;
-        // you could log or handle the lost event here
+        X = e.NewX;
+        Y = e.NewY;
     }
+    private void When(RobotLostEvent e) => IsLost = true;
 
     public override string ToString()
     {

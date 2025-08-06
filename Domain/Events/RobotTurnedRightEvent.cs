@@ -11,5 +11,3 @@ internal class RobotTurnedRightEvent : DomainEvent
         NewOrientation = orientation;
     }
 }
-{
-}

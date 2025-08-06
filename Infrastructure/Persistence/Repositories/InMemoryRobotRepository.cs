@@ -6,9 +6,12 @@ using MediatR;
 namespace Infrastructure.Persistence.Repositories;
 public class InMemoryRobotRepository : IRobotRepository
 {
-    private readonly ISender _sender;
+    private readonly IMediator _mediator;
 
-    public InMemoryRobotRepository(ISender sender) => _sender = sender;
+    public InMemoryRobotRepository(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
 
     private readonly Dictionary<Guid, List<DomainEvent>> _eventStore = [];
     public Task<Robot> GetRobotAsync(Guid id)
@@ -39,7 +42,7 @@ public class InMemoryRobotRepository : IRobotRepository
 
         foreach (var @event in unCommittedEvents)
         {
-            await _sender.Send(@event, cancellationToken);
+            await _mediator.Publish(@event);
         }
 
         robot.ClearUncommittedEvents();
